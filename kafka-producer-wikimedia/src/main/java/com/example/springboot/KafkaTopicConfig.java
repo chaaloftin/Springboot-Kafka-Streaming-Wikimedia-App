@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 
+/**
+ * Class to store all Kafka Topic beans
+ */
 @Configuration
 public class KafkaTopicConfig {
     @Value("${spring.kafka.topic.wikimedia-recent-change.name}")

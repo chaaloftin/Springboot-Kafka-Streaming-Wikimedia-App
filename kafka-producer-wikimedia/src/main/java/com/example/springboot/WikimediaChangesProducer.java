@@ -2,6 +2,7 @@ package com.example.springboot;
 
 import com.launchdarkly.eventsource.EventHandler;
 import com.launchdarkly.eventsource.EventSource;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,12 +17,15 @@ import java.util.concurrent.TimeUnit;
  * changes topic
  */
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class WikimediaChangesProducer {
     @Value("${spring.kafka.topic.wikimedia-recent-change.name}")
     private String wikimediaRecentChangeTopicName;
     private KafkaTemplate<String, String> kafkaTemplate;
+
+    public WikimediaChangesProducer(KafkaTemplate<String, String> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
     public void sendMessage() throws InterruptedException {
         EventHandler eventHandler = new WikimediaChangesHandler(kafkaTemplate, wikimediaRecentChangeTopicName);
